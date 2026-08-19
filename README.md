@@ -2,7 +2,10 @@
 
 Akademik ve profesyonel komutlar oluşturmak için geliştirilmiş web tabanlı araç.
 
-[Akademik Komut Geliştirici'yi Aç](https://tdirsehan.github.io/tdirsehan/)
+[Akademik Komut Geliştirici'yi Aç](https://tdirsehan.github.io/akademik-komut-gelistirici/)
+
+GitHub projesi:
+https://github.com/tdirsehan/akademik-komut-gelistirici
 
 Özellikler:
 - Akademik araştırma, literatür taraması, makale fikri geliştirme ve hakem değerlendirmesi şablonları
