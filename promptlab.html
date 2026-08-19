@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PromptLab Akademik Prompt Geliştirici</title>
+<style>
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --text:#1f2937; --muted:#6b7280;
+  --border:#e5e7eb; --accent:#2563eb; --accent2:#1d4ed8;
+  --good:#15803d; --warn:#b45309; --bad:#b91c1c;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+header{padding:24px 28px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.94);position:sticky;top:0;z-index:10}
+.header-wrap{max-width:1480px;margin:auto;display:flex;justify-content:space-between;gap:20px;align-items:center}
+h1{margin:0;font-size:24px}
+.subtitle{color:var(--muted);font-size:14px;margin-top:4px}
+main{max-width:1480px;margin:22px auto;padding:0 22px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(390px,.9fr);gap:22px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 30px rgba(15,23,42,.05)}
+.panel-inner{padding:22px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px}
+button,select,input,textarea{font:inherit}
+button{border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 13px;cursor:pointer}
+button.primary{background:var(--accent);color:white;border-color:var(--accent)}
+button:hover{filter:brightness(.98)}
+select,input,textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:#fff;color:var(--text)}
+textarea{min-height:95px;resize:vertical;line-height:1.45}
+label{font-weight:650;font-size:14px}
+.hint{font-size:12px;color:var(--muted);margin-top:5px}
+.field{margin-bottom:18px}
+.field-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:7px}
+.badge{font-size:11px;padding:4px 8px;border-radius:999px;background:#eff6ff;color:#1d4ed8}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.scorebox{display:flex;align-items:center;gap:13px}
+.score{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:19px;border:7px solid #dbeafe;background:white}
+.score-text{font-size:13px;color:var(--muted)}
+.progress{height:8px;background:#edf2f7;border-radius:999px;overflow:hidden;margin-top:8px}
+.progress > div{height:100%;width:0;background:var(--accent);transition:.2s}
+.right{position:sticky;top:112px;align-self:start}
+.output{white-space:pre-wrap;background:#0f172a;color:#e5e7eb;border-radius:12px;padding:18px;min-height:430px;max-height:60vh;overflow:auto;line-height:1.52;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px}
+.checklist{margin:14px 0 0;padding:0;list-style:none}
+.checklist li{display:flex;gap:9px;margin:8px 0;font-size:13px;color:var(--muted)}
+.dot{width:9px;height:9px;border-radius:50%;margin-top:5px;background:#d1d5db;flex:0 0 auto}
+.dot.ok{background:var(--good)} .dot.warn{background:var(--warn)}
+.section-title{font-size:16px;font-weight:760;margin:0 0 14px}
+.small{font-size:12px;color:var(--muted)}
+.status{min-height:18px;margin-top:8px;font-size:12px;color:var(--good)}
+.template-note{padding:10px 12px;background:#f8fafc;border:1px dashed var(--border);border-radius:10px;font-size:12px;color:var(--muted)}
+footer{max-width:1480px;margin:0 auto;padding:0 22px 30px;color:var(--muted);font-size:12px}
+@media(max-width:980px){
+  main{grid-template-columns:1fr}
+  .right{position:static}
+}
+@media(max-width:640px){.row{grid-template-columns:1fr}.header-wrap{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-wrap">
+    <div>
+      <h1>PromptLab</h1>
+      <div class="subtitle">Akademik ve profesyonel prompt geliştirme aracı</div>
+    </div>
+    <div class="toolbar">
+      <select id="templateSelect" aria-label="Şablon seç">
+        <option value="academic">Akademik Araştırma</option>
+        <option value="literature">Literatür Taraması</option>
+        <option value="article">Makale Fikri Geliştirme</option>
+        <option value="reviewer">Hakem Değerlendirmesi</option>
+        <option value="general">Genel Amaçlı</option>
+      </select>
+      <button id="loadTemplate">Şablonu Yükle</button>
+      <button id="clearBtn">Temizle</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="panel">
+    <div class="panel-inner">
+      <div class="field">
+        <div class="field-head"><label for="purpose">1. Amaç</label><span class="badge">Neden?</span></div>
+        <textarea id="purpose" placeholder="Bu prompt ile hangi sonuca ulaşılmak isteniyor?"></textarea>
+        <div class="hint">Başarı ölçütünü mümkün olduğunca somutlaştırın.</div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="role">2. Rol / Uzmanlık</label><span class="badge">Kim gibi?</span></div>
+        <textarea id="role" placeholder="Model hangi uzmanlık perspektifinden yaklaşmalı?"></textarea>
+        <div class="hint">Abartılı sıfatlar yerine gerekli uzmanlık alanlarını belirtin.</div>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="task">3. Görev</label><span class="badge">Ne yapılacak?</span></div>
+        <textarea id="task" placeholder="İstenen işi açık, operasyonel ve ölçülebilir biçimde tanımlayın."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="context">4. Bağlam</label><span class="badge">Hangi koşullarda?</span></div>
+        <textarea id="context" placeholder="Alan, hedef kitle, mevcut bilgi, veri, yöntem, tarih aralığı vb."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="evidence">5. Kaynak / Kanıt Kuralları</label><span class="badge">Neye dayanacak?</span></div>
+        <textarea id="evidence" placeholder="Kaynak türü, tarih aralığı, doğrulama, atıf ve uydurma kaynak yasağı gibi kurallar."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="constraints">6. Kısıtlar</label><span class="badge">Sınırlar</span></div>
+        <textarea id="constraints" placeholder="Kaçınılması gerekenler ve tercih edilen alternatifler."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="format">7. Çıktı Formatı</label><span class="badge">Nasıl sunulacak?</span></div>
+        <textarea id="format" placeholder="Başlıklar, tablo, madde sayısı, puanlama, sıralama vb."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="quality">8. Kalite Kontrolü</label><span class="badge">Nasıl değerlendirilecek?</span></div>
+        <textarea id="quality" placeholder="Özgünlük, uygulanabilirlik, risk, tutarlılık ve öz-eleştiri ölçütleri."></textarea>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="tone">Üslup</label>
+          <input id="tone" placeholder="Örn. resmî, temkinli, akademik, açık" />
+        </div>
+        <div class="field">
+          <label for="language">Dil</label>
+          <select id="language">
+            <option>Türkçe</option>
+            <option>İngilizce</option>
+            <option>Almanca</option>
+            <option>Fransızca</option>
+          </select>
+        </div>
+      </div>
+      <div class="template-note">
+        İpucu: İyi bir promptun uzun olması gerekmez. Belirsizliği azaltması, kanıt standardını ve istenen çıktıyı açıkça tanımlaması daha önemlidir.
+      </div>
+    </div>
+  </section>
+  <aside class="panel right">
+    <div class="panel-inner">
+      <div class="scorebox">
+        <div class="score" id="scoreCircle">0</div>
+        <div>
+          <div class="section-title" style="margin-bottom:3px">Prompt Kalite Puanı</div>
+          <div class="score-text" id="scoreLabel">Alanları doldurmaya başlayın.</div>
+          <div class="progress"><div id="progressBar"></div></div>
+        </div>
+      </div>
+      <ul class="checklist" id="checklist"></ul>
+      <div class="section-title" style="margin-top:20px">Oluşturulan Prompt</div>
+      <div class="output" id="output"></div>
+      <div class="toolbar" style="margin-top:14px">
+        <button class="primary" id="copyBtn">Promptu Kopyala</button>
+        <button id="txtBtn">TXT İndir</button>
+        <button id="jsonBtn">JSON İndir</button>
+        <button id="saveBtn">Yerel Kaydet</button>
+        <button id="loadSavedBtn">Kaydı Aç</button>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+  </aside>
+</main>
+<footer>
+  Veriler yalnızca tarayıcınızda işlenir. “Yerel Kaydet” kullanılırsa bilgiler localStorage içinde tutulur.
+</footer>
+<script>
+const ids = ["purpose","role","task","context","evidence","constraints","format","quality","tone","language"];
+const el = id => document.getElementById(id);
+const templates = {
+  academic: {
+    purpose:"Akademik olarak savunulabilir, özgün ve metodolojik açıdan uygulanabilir bir araştırma çıktısı üretmek.",
+    role:"İlgili literatüre hâkim, metodolojik açıdan titiz ve eleştirel bir akademik araştırma danışmanı olarak görev yap.",
+    task:"Verilen araştırma problemi üzerinde sistematik biçimde çalış; teorik dayanakları, araştırma boşluklarını ve test edilebilir önerileri geliştir.",
+    context:"Alan, hedef dergi, teorik yaklaşım, mevcut veri, örneklem, yöntem tercihleri ve araştırmanın bağlamı kullanıcı tarafından sağlanan bilgiler doğrultusunda dikkate alınsın.",
+    evidence:"Öncelikle hakemli akademik kaynaklara dayan. Güncel literatüre ağırlık ver. Doğrulanamayan kaynak, DOI veya bulgu üretme. Bir iddia doğrulanamıyorsa bunu açıkça belirt.",
+    constraints:"Kesinlik taşımayan bulguları kesinmiş gibi sunma. Basit ve aşırı genel modellerden kaçın. Teorik katkı ile ampirik uygulanabilirlik birlikte değerlendirilsin.",
+    format:"Çıktıyı açık başlıklar altında sun. Gerekli olduğunda araştırma sorusu, teorik çerçeve, yöntem, beklenen katkı, sınırlılıklar ve olası hedef dergileri ayrı başlıklarda göster.",
+    quality:"Sonuçları özgünlük, teorik katkı, metodolojik uygulanabilirlik, veri erişilebilirliği ve olası hakem eleştirileri açısından eleştirel biçimde kontrol et.",
+    tone:"Resmî, temkinli, akademik ve açıklayıcı"
+  },
+  literature: {
+    purpose:"Belirli bir konuda güvenilir, güncel ve araştırma boşluklarını görünür kılan bir literatür sentezi oluşturmak.",
+    role:"Sistematik literatür taraması, bibliyometri ve teori geliştirme konusunda deneyimli bir akademik araştırmacı olarak görev yap.",
+    task:"Literatürü temalar, teoriler, yöntemler, örneklemler ve bulgular bakımından sınıflandır; çelişkileri ve eksik araştırılmış alanları belirle.",
+    context:"İncelenecek konu, tarih aralığı, disiplin, veri tabanları ve hedef dergi standartları dikkate alınsın.",
+    evidence:"Hakemli yayınlara öncelik ver; güncel ve yüksek etkili çalışmaları ayırt et; kaynak uydurma; mümkün olduğunda DOI veya güvenilir bibliyografik bilgi kullan.",
+    constraints:"Yalnızca betimleyici özet yapma; sentez ve karşılaştırma üret. 'Literatürde hiç çalışma yoktur' gibi güçlü iddialardan doğrulama olmadan kaçın.",
+    format:"Temalar, temel bulgular, çelişkiler, yöntemsel eğilimler, araştırma boşlukları ve gelecek araştırma soruları başlıkları kullanılsın.",
+    quality:"Her araştırma boşluğu için gerçekten literatürden türetilip türetilmediğini, yeterince özgün ve araştırılabilir olup olmadığını değerlendir.",
+    tone:"Analitik, temkinli ve akademik"
+  },
+  article: {
+    purpose:"Yayın potansiyeli taşıyan özgün ve uygulanabilir yeni makale fikirleri geliştirmek.",
+    role:"Pazarlama, tüketici davranışı ve teknoloji araştırmaları alanlarında deneyimli bir akademik danışman olarak görev yap.",
+    task:"En az 8 yeni araştırma fikri üret ve her fikir için araştırma sorusu, teorik mekanizma, olası model ve yöntem öner.",
+    context:"Özellikle güncel, hızla gelişen ve teorik katkı potansiyeli taşıyan konulara odaklan. Kullanıcının mevcut yöntem ve veri erişimi sınırlılıklarını dikkate al.",
+    evidence:"Önerilen boşlukların gerçekten güncel literatürde ne ölçüde desteklendiğini kontrol et; doğrulanamayan özgünlük iddialarını ihtiyatlı biçimde ifade et.",
+    constraints:"Yalnızca 'X'in Y üzerindeki etkisi' biçimindeki basit modellerden kaçın. Paradoks, mekanizma, sınır koşulu veya beklenmedik ilişki içeren fikirlere öncelik ver.",
+    format:"Her fikir için: başlık, araştırma sorusu, research gap, teori, yöntem, teorik katkı, uygulanabilirlik, risk ve özgünlük puanı (/10) ver.",
+    quality:"Her fikri daha önce yapılmış olma riski, desk rejection riski, veri toplama zorluğu ve teorik katkı düzeyi açısından eleştir.",
+    tone:"Resmî, yaratıcı fakat temkinli akademik"
+  },
+  reviewer: {
+    purpose:"Bir makaleyi yapıcı, adil ve metodolojik açıdan titiz biçimde değerlendirmek.",
+    role:"İlgili alanda deneyimli ve etik hakemlik ilkelerine bağlı kıdemli bir akademik hakem olarak görev yap.",
+    task:"Makalenin teorik katkısını, literatür kullanımını, yöntemini, analizlerini, bulgularını ve yazım kalitesini değerlendir.",
+    context:"Derginin amacı, kapsamı ve değerlendirme standardı dikkate alınsın.",
+    evidence:"Yalnızca metinde görülebilen sorunları veya güvenilir metodolojik ilkeleri temel al. Kanıtsız suçlama veya kaynak uydurma.",
+    constraints:"Yazar kimliğine ilişkin varsayım yapma. Eleştirileri kişiselleştirme. Her önemli eleştiriye mümkünse uygulanabilir bir çözüm öner.",
+    format:"Önce kısa genel değerlendirme, ardından major comments, minor comments ve editöre öneri bölümleri kullan.",
+    quality:"Eleştirilerin doğruluk, önem, açıklık, uygulanabilirlik ve adalet açısından tutarlı olup olmadığını son kez kontrol et.",
+    tone:"Yapıcı, profesyonel, temkinli ve açık"
+  },
+  general: {
+    purpose:"İstenen görevi açık, güvenilir ve kullanışlı bir çıktıya dönüştürmek.",
+    role:"Görev için gerekli uzmanlıkları kullanan dikkatli bir yardımcı olarak görev yap.",
+    task:"Kullanıcının verdiği görevi açık adımlarla yerine getir.",
+    context:"Kullanıcı tarafından verilen tüm bağlam ve sınırlamaları dikkate al.",
+    evidence:"Bilgi gerektiren iddialarda güvenilir kaynaklara dayan; emin olunmayan noktaları açıkça belirt.",
+    constraints:"Gereksiz varsayımlardan ve kullanıcının istemediği ayrıntılardan kaçın.",
+    format:"Çıktıyı açık, taranabilir ve göreve uygun bir yapıda sun.",
+    quality:"Yanıtı doğruluk, eksiksizlik, tutarlılık ve kullanılabilirlik açısından kontrol et.",
+    tone:"Açık, profesyonel ve temkinli"
+  }
+};
+function gather(){
+  const data={};
+  ids.forEach(i=>data[i]=el(i).value.trim());
+  return data;
+}
+function buildPrompt(d){
+  const sections = [
+    ["AMAÇ", d.purpose],
+    ["ROL / UZMANLIK", d.role],
+    ["GÖREV", d.task],
+    ["BAĞLAM", d.context],
+    ["KAYNAK / KANIT KURALLARI", d.evidence],
+    ["KISITLAR", d.constraints],
+    ["ÇIKTI FORMATI", d.format],
+    ["KALİTE KONTROLÜ", d.quality],
+    ["ÜSLUP", d.tone],
+    ["DİL", d.language]
+  ];
+  return sections.filter(x=>x[1]).map(x=>`${x[0]}:\n${x[1]}`).join("\n\n");
+}
+function qualityScore(d){
+  let score=0;
+  const weights={purpose:12,role:8,task:18,context:12,evidence:12,constraints:10,format:12,quality:10,tone:4,language:2};
+  Object.entries(weights).forEach(([k,w])=>{
+    const len=(d[k]||"").length;
+    const factor = len===0 ? 0 : len<25 ? .45 : len<70 ? .75 : 1;
+    score += w*factor;
+  });
+  if(d.task.length>120) score+=2;
+  if(d.evidence.match(/kaynak|doğrula|hakemli|atıf|DOI/i)) score+=2;
+  if(d.quality.match(/özgün|uygulan|risk|eleştir|kontrol/i)) score+=2;
+  return Math.min(100,Math.round(score));
+}
+function checklist(d){
+  return [
+    ["Amaç açıkça tanımlanmış", d.purpose.length>=30],
+    ["Görev operasyonel ve yeterince özgül", d.task.length>=60],
+    ["Bağlam verilmiş", d.context.length>=35],
+    ["Kanıt/kaynak standardı belirtilmiş", d.evidence.length>=35],
+    ["Kısıtlar tanımlanmış", d.constraints.length>=30],
+    ["Çıktı formatı açık", d.format.length>=30],
+    ["Kalite kontrol ölçütleri mevcut", d.quality.length>=30],
+    ["Üslup ve dil tanımlanmış", d.tone.length>=10 && d.language.length>0]
+  ];
+}
+function render(){
+  const d=gather();
+  el("output").textContent=buildPrompt(d) || "Alanları doldurduğunuzda oluşturulan prompt burada görünecektir.";
+  const s=qualityScore(d);
+  el("scoreCircle").textContent=s;
+  el("progressBar").style.width=s+"%";
+  el("scoreLabel").textContent = s>=85 ? "Çok güçlü yapı." : s>=70 ? "İyi; birkaç alan geliştirilebilir." : s>=50 ? "Temel yapı mevcut, ayrıntı artırılmalı." : "Belirsizlik hâlâ yüksek.";
+  const list=checklist(d);
+  el("checklist").innerHTML=list.map(([t,ok])=>`<li><span class="dot ${ok?"ok":"warn"}"></span><span>${t}</span></li>`).join("");
+}
+function loadTemplate(){
+  const t=templates[el("templateSelect").value];
+  Object.keys(t).forEach(k=>{ if(el(k)) el(k).value=t[k]; });
+  render();
+  notify("Şablon yüklendi.");
+}
+function notify(msg){
+  el("status").textContent=msg;
+  clearTimeout(window._st);
+  window._st=setTimeout(()=>el("status").textContent="",2500);
+}
+async function copyPrompt(){
+  const text=el("output").textContent;
+  try{
+    await navigator.clipboard.writeText(text);
+    notify("Prompt panoya kopyalandı.");
+  }catch(e){
+    const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); ta.remove(); notify("Prompt panoya kopyalandı.");
+  }
+}
+function download(name, content, type){
+  const blob=new Blob([content],{type});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+ids.forEach(i=>el(i).addEventListener("input",render));
+el("loadTemplate").addEventListener("click",loadTemplate);
+el("clearBtn").addEventListener("click",()=>{ids.forEach(i=>{if(i!=="language")el(i).value="";}); el("language").value="Türkçe"; render(); notify("Form temizlendi.");});
+el("copyBtn").addEventListener("click",copyPrompt);
+el("txtBtn").addEventListener("click",()=>download("prompt.txt",buildPrompt(gather()),"text/plain;charset=utf-8"));
+el("jsonBtn").addEventListener("click",()=>download("prompt.json",JSON.stringify(gather(),null,2),"application/json;charset=utf-8"));
+el("saveBtn").addEventListener("click",()=>{localStorage.setItem("promptlab.saved",JSON.stringify(gather())); notify("Tarayıcıya kaydedildi.");});
+el("loadSavedBtn").addEventListener("click",()=>{
+  const raw=localStorage.getItem("promptlab.saved");
+  if(!raw){notify("Kayıt bulunamadı."); return;}
+  try{
+    const d=JSON.parse(raw); ids.forEach(i=>{if(d[i]!==undefined)el(i).value=d[i];}); render(); notify("Kayıt açıldı.");
+  }catch(e){notify("Kayıt okunamadı.");}
+});
+loadTemplate();
+</script>
+</body>
+</html>
