@@ -1,0 +1,15 @@
+{
+  "name": "PromptLab Akademik Prompt Geliştirici",
+  "short_name": "PromptLab",
+  "description": "Akademik ve profesyonel prompt geliştirme aracı",
+  "start_url": "./promptlab-app.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#2563eb",
+  "lang": "tr",
+  "categories": ["productivity", "education"],
+  "icons": [
+    {"src": "./promptlab-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
