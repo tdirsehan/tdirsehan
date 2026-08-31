@@ -1,27 +1,31 @@
 <p align="center">
-  <img src="assets/academic-ai-tools.svg" alt="Academic AI Tools by Prof. Dr. Taşkın Dirsehan" width="100%">
+  <img src="assets/academic-ai-tools.svg" alt="AcademIQ Tools by Prof. Dr. Taşkın Dirsehan" width="100%">
 </p>
 
 # Prof. Dr. Taşkın Dirsehan
 
-Professor of Marketing | Academic AI Tools | Research Methods | Consumer Behaviour | AI for Research and Publishing
+Professor of Marketing | AcademIQ Tools | Research Methods | Consumer Behaviour | AI for Research and Publishing
 
-This profile brings together practical academic web applications developed to support researchers, authors, reviewers, and doctoral students across the research and publication process.
+AcademIQ Tools brings together six focused academic web applications supporting the research and publishing journey from prompt development to reviewer response.
 
-## Academic AI Tool Portfolio
+## AcademIQ Tools
 
-| Tool | What it does | Live App | Repository |
-|---|---|---|---|
-| Akademik Komut Geliştirici | Generates structured academic prompts for literature review, research design, idea development, academic writing, reviewing, and AI-assisted scholarly workflows. | [Open App](https://tdirsehan.github.io/akademik-komut-gelistirici/) | [GitHub](https://github.com/tdirsehan/akademik-komut-gelistirici) |
-| Review Splitter | Splits reviewer comments into structured items such as R1.1 and R1.2 and supports point-by-point author-response preparation. | [Open App](https://tdirsehan.github.io/review-splitter/) | [GitHub](https://github.com/tdirsehan/review-splitter) |
-| Abstract2Keywords | Generates publication-oriented keywords from abstracts and supports structured and unstructured abstract workflows. | [Open App](https://tdirsehan.github.io/abstract2keywords/) | [GitHub](https://github.com/tdirsehan/abstract2keywords) |
-| Abstract2Journal | Recommends suitable journals from abstracts and keywords using publication evidence, topic overlap, Journal Fit, and similar published articles. | [Open App](https://tdirsehan.github.io/abstract2journal/) | [GitHub](https://github.com/tdirsehan/abstract2journal) |
+Main portal: https://tdirsehan.github.io/academic-ai-toolkit/
 
-## Integrated Academic Workflow
+| Stage | Tool | What it does | Live App | Repository |
+|---|---|---|---|---|
+| 1. Research | Academic Prompt Generator | Builds structured academic AI prompts with evidence rules, constraints, output formats, and quality controls. | [Open App](https://tdirsehan.github.io/academic-prompt-generator/) | [GitHub](https://github.com/tdirsehan/academic-prompt-generator) |
+| 2. Metadata | Abstract2Keywords | Generates publication-oriented keywords and supports structured academic abstracts. | [Open App](https://tdirsehan.github.io/abstract2keywords/) | [GitHub](https://github.com/tdirsehan/abstract2keywords) |
+| 3. Positioning | Abstract2Title | Generates and compares publication-ready title alternatives. | [Open App](https://tdirsehan.github.io/abstract2title/) | [GitHub](https://github.com/tdirsehan/abstract2title) |
+| 4. Targeting | Abstract2Journal | Matches abstracts with journals using publication evidence, topic overlap, similar articles, and OpenAlex data. | [Open App](https://tdirsehan.github.io/abstract2journal/) | [GitHub](https://github.com/tdirsehan/abstract2journal) |
+| 5. Submission | Abstract2CoverLetter | Drafts journal-oriented cover letters with scope-fit and quality checks. | [Open App](https://tdirsehan.github.io/abstract2coverletter/) | [GitHub](https://github.com/tdirsehan/abstract2coverletter) |
+| 6. Peer Review | Review Splitter | Converts reviewer reports into structured point-by-point response items such as R1.1, R1.2, and R2.1. | [Open App](https://tdirsehan.github.io/review-splitter/) | [GitHub](https://github.com/tdirsehan/review-splitter) |
 
-`Prompt development` → `Reviewer response structuring` → `Keyword generation` → `Journal selection`
+## One Connected Academic Workflow
 
-These tools are designed as complementary micro-applications rather than isolated utilities. Together, they support different stages of academic research and publishing.
+`Prompt` → `Keywords` → `Title` → `Journal` → `Cover Letter` → `Reviewer Response`
+
+The six modules can be used independently, while AcademIQ Tools provides a single entry point for the full workflow.
 
 ## Research Interests
 
@@ -33,31 +37,9 @@ These tools are designed as complementary micro-applications rather than isolate
 - Academic writing and publishing support
 - Research design and quantitative methods
 
-## Featured Applications
+## Responsible Use
 
-### 1. Akademik Komut Geliştirici
-
-A structured prompt-development environment for academic research and professional AI use.
-
-[Launch Akademik Komut Geliştirici](https://tdirsehan.github.io/akademik-komut-gelistirici/)
-
-### 2. Review Splitter
-
-A reviewer-response support tool for converting complex referee reports into manageable point-by-point response items.
-
-[Launch Review Splitter](https://tdirsehan.github.io/review-splitter/)
-
-### 3. Abstract2Keywords
-
-A lightweight academic tool that turns abstracts into publication-oriented keyword suggestions.
-
-[Launch Abstract2Keywords](https://tdirsehan.github.io/abstract2keywords/)
-
-### 4. Abstract2Journal
-
-An evidence-based journal recommender that uses abstract and keyword input to identify potentially suitable journals and related published work.
-
-[Launch Abstract2Journal](https://tdirsehan.github.io/abstract2journal/)
+AcademIQ Tools supports academic work but does not replace scholarly judgement, peer review, editorial decisions, source verification, or institutional research governance. Scores and recommendations produced by individual tools should be treated as decision-support indicators rather than guarantees of publication or acceptance.
 
 ## GitHub
 
