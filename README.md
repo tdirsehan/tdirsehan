@@ -6,7 +6,7 @@
 
 Professor of Marketing | AcademIQ Tools | Research Methods | Consumer Behaviour | AI for Research and Publishing
 
-AcademIQ Tools brings together six focused academic web applications supporting the research and publishing journey from prompt development to reviewer response.
+AcademIQ Tools brings together six focused academic web applications supporting the research-to-publication journey from framing the academic task to reviewer response.
 
 ## AcademIQ Tools
 
@@ -14,18 +14,18 @@ Main portal: https://tdirsehan.github.io/academic-ai-toolkit/
 
 | Stage | Tool | What it does | Live App | Repository |
 |---|---|---|---|---|
-| 1. Research | Academic Prompt Generator | Builds structured academic AI prompts with evidence rules, constraints, output formats, and quality controls. | [Open App](https://tdirsehan.github.io/academic-prompt-generator/) | [GitHub](https://github.com/tdirsehan/academic-prompt-generator) |
-| 2. Metadata | Abstract2Keywords | Generates publication-oriented keywords and supports structured academic abstracts. | [Open App](https://tdirsehan.github.io/abstract2keywords/) | [GitHub](https://github.com/tdirsehan/abstract2keywords) |
+| 1. Research planning | Academic Prompt Generator | Builds structured academic AI prompts with evidence rules, constraints, output formats, and quality controls. | [Open App](https://tdirsehan.github.io/academic-prompt-generator/) | [GitHub](https://github.com/tdirsehan/academic-prompt-generator) |
+| 2. Research communication | Abstract2Keywords | Generates publication-oriented keywords and supports structured academic abstracts. | [Open App](https://tdirsehan.github.io/abstract2keywords/) | [GitHub](https://github.com/tdirsehan/abstract2keywords) |
 | 3. Positioning | Abstract2Title | Generates and compares publication-ready title alternatives. | [Open App](https://tdirsehan.github.io/abstract2title/) | [GitHub](https://github.com/tdirsehan/abstract2title) |
-| 4. Targeting | Abstract2Journal | Matches abstracts with journals using publication evidence, topic overlap, similar articles, and OpenAlex data. | [Open App](https://tdirsehan.github.io/abstract2journal/) | [GitHub](https://github.com/tdirsehan/abstract2journal) |
+| 4. Dissemination | Abstract2Journal | Matches abstracts with journals using publication evidence, topic overlap, similar articles, and OpenAlex data. | [Open App](https://tdirsehan.github.io/abstract2journal/) | [GitHub](https://github.com/tdirsehan/abstract2journal) |
 | 5. Submission | Abstract2CoverLetter | Drafts journal-oriented cover letters with scope-fit and quality checks. | [Open App](https://tdirsehan.github.io/abstract2coverletter/) | [GitHub](https://github.com/tdirsehan/abstract2coverletter) |
-| 6. Peer Review | Review Splitter | Converts reviewer reports into structured point-by-point response items such as R1.1, R1.2, and R2.1. | [Open App](https://tdirsehan.github.io/review-splitter/) | [GitHub](https://github.com/tdirsehan/review-splitter) |
+| 6. Revision | Review Splitter | Converts reviewer reports into structured point-by-point response items such as R1.1, R1.2, and R2.1. | [Open App](https://tdirsehan.github.io/review-splitter/) | [GitHub](https://github.com/tdirsehan/review-splitter) |
 
-## One Connected Academic Workflow
+## One Connected Research Workflow
 
-`Prompt` → `Keywords` → `Title` → `Journal` → `Cover Letter` → `Reviewer Response`
+`Research task / Prompt` → `Keywords` → `Title` → `Journal` → `Cover Letter` → `Reviewer Response`
 
-The six modules can be used independently, while AcademIQ Tools provides a single entry point for the full workflow.
+The six modules can be used independently, while AcademIQ Tools provides a single entry point across the research-to-publication process.
 
 ## Research Interests
 
